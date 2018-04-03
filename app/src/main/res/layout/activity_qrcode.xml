@@ -22,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/result_textview"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
         android:text="@string/scan_barcode_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
