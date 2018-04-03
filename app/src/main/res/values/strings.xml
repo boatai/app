@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">boatapp</string>
+    <string name="no_barcode_captured">Geen barcode gevonden</string>
+    <string name="scan_barcode_button">Scan barcode</string>
+    <string name="low_storage_error">Error (low storage error)</string>
+    <string name="ok">Oke</string>
+    <string name="no_camera_permission">No Camera Permission</string>
+    <string name="barcode_error_format">Error (barcode error format)</string>
 </resources>

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.boat.app.boatapp.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        app:logo="@drawable/ic_fedex"
+        app:title="@string/app_name"
+        app:titleMarginStart="32dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,8 +30,8 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="132dp"
         android:onClick="qrCodePage"
         android:text="QrCode"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,8 +41,8 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="55dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="132dp"
         android:onClick="InternetPage"
         android:text="Internet"
         app:layout_constraintEnd_toEndOf="parent"
