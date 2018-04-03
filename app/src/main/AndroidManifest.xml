@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.boat.app.boatapp">
 
-    <!-- adding permission for the interwebs!! -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,8 @@
         <activity android:name=".Qrcode"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".InternetConnection"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".barcode.BarcodeCaptureActivity"
             android:parentActivityName=".MainActivity"/>
     </application>
 

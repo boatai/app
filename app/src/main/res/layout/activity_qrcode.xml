@@ -6,4 +6,24 @@
     android:layout_height="match_parent"
     tools:context="com.boat.app.boatapp.Qrcode">
 
+    <TextView
+        android:id="@+id/result_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_barcode_captured"
+        android:textSize="22sp"
+        android:autoLink="all"
+        android:freezesText="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/result_textview"
+        android:text="@string/scan_barcode_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
 </android.support.constraint.ConstraintLayout>
