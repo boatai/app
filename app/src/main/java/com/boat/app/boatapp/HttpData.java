@@ -3,6 +3,8 @@ package com.boat.app.boatapp;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,18 +34,18 @@ public class HttpData extends AsyncTask<String, String, String> {
 
             reader = new BufferedReader(new InputStreamReader(stream));
 
-            StringBuffer buffer = new StringBuffer();
+            StringBuffer data = new StringBuffer();
             String line = "";
 
             while ((line = reader.readLine()) != null) {
-                buffer.append(line);
-                Log.d("Response: ",  line); //here u ll get whole response...... :-)
+                data.append(line);
+                Log.d("Response: ",  line);
 
             }
             //result
-            Log.d("JSON RESPONSE" , String.valueOf(buffer));
+            Log.d("JSON RESPONSE" , String.valueOf(data));
 
-            String result = buffer.toString();
+            String result = data.toString();
 
             return result;
 

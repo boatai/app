@@ -21,7 +21,7 @@ public class InternetConnection extends AppCompatActivity {
     public void TestInternet(View v) throws ExecutionException, InterruptedException {
         Log.d("test", "Button is working");
 
-        String link =  "http://198.211.121.193:8000/api/games/";
+        String link =  "http://198.211.121.193:8000/api/games/5a2fc6bf84b563738db808b9";
 
         new HttpData().execute(link);
 
