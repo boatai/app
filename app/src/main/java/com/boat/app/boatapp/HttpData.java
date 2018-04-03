@@ -3,6 +3,8 @@ package com.boat.app.boatapp;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -39,13 +41,18 @@ public class HttpData extends AsyncTask<String, String, String> {
 
             while ((line = reader.readLine()) != null) {
                 data.append(line);
-                Log.d("Response: ",  line);
-
             }
-            //result
-            Log.d("JSON RESPONSE" , String.valueOf(data));
 
-            String result = data.toString();
+            String json = data.toString();
+
+            //result before parsing
+            Log.d("JSON" , String.valueOf(data));
+
+            String result = JSONtoData(json);
+            //result
+            Log.d("JSON RESPONSE" , result);
+
+             //TODO: send data back and put in listview!
 
             return result;
 
@@ -66,6 +73,22 @@ public class HttpData extends AsyncTask<String, String, String> {
             }
         }
         return null;
+    }
+
+    public String JSONtoData(String jsonString){
+        try {
+            JSONObject reader = new JSONObject(jsonString);
+
+            JSONObject p = (JSONObject) ((reader.getJSONArray("packages"))).get(0);
+
+            return p.getString("name");
+        } catch (JSONException e ){
+            e.printStackTrace();
+
+            Log.d("JSON", "DECODE FAILED");
+
+            return "decode Failed";
+        }
     }
 
     @Override
