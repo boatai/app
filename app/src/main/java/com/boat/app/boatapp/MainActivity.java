@@ -1,8 +1,10 @@
 package com.boat.app.boatapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,5 +14,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d("werkt dit " , "hjakkas");
+    }
+
+    public void qrCodePage(View v){
+
+        Intent intent = new Intent(this, Qrcode.class);
+
+        startActivity(intent);
+    }
+
+    public void InternetPage(View v){
+
+        Intent intent = new Intent(this, InternetConnection.class);
+
+        startActivity(intent);
     }
 }
