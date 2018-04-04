@@ -35,8 +35,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.boat.app.boatapp.camera.CameraOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -88,6 +90,10 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         } else {
             requestCameraPermission();
         }
+
+        CameraOverlay cameraoverlay = new CameraOverlay(this);
+
+        addContentView(cameraoverlay, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
     }
 
     @Override
