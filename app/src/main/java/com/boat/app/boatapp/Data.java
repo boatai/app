@@ -6,18 +6,18 @@ package com.boat.app.boatapp;
 
 class Data {
     private String name;
-    private String description;
+    private String status;
 
-    public Data(String name, String description) {
+    public Data(String name, String status) {
         this.name = name;
-        this.description = description;
+        this.status = status;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getStatus() {
+        return status;
     }
 }
