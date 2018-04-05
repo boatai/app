@@ -27,11 +27,11 @@ public class CameraOverlay extends View {
         paint.setStyle(Paint.Style.FILL);
 
 //        center
-        int halfWidth = canvas.getWidth()/2;
-        int halfHeight = canvas.getHeight()/2;
-        int quarterHeight = canvas.getHeight()/4;
         int fullHeight = canvas.getHeight();
         int fullWith = canvas.getWidth();
+        int halfWidth = fullWith/2;
+        int halfHeight = fullHeight/2;
+        int quarterHeight = halfHeight/2;
 
 //        left top corner
         canvas.drawRect(halfWidth-quarterHeight, quarterHeight, halfWidth-quarterHeight+100, quarterHeight+15, paint);
