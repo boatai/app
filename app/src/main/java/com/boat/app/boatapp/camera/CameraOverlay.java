@@ -55,5 +55,10 @@ public class CameraOverlay extends View {
         canvas.drawRect(halfWidth+quarterHeight, 0, fullWith, fullHeight, paint);
         canvas.drawRect(halfWidth-quarterHeight, 0, halfWidth+quarterHeight, halfHeight-quarterHeight, paint);
         canvas.drawRect(halfWidth-quarterHeight, halfHeight+quarterHeight, halfWidth+quarterHeight, fullHeight, paint);
+
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(80);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("Scan QR code", halfWidth, fullHeight-100, paint);
     }
 }
