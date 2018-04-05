@@ -1,6 +1,5 @@
 package com.boat.app.boatapp;
 
-import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;

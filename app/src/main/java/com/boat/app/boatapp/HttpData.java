@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rvoor on 3-4-2018.
@@ -20,7 +22,15 @@ import java.net.URL;
 
 public class HttpData extends AsyncTask<String, String, String> {
 
+    List<String> name_array = new ArrayList<String>();
+    List<String> status_array = new ArrayList<String>();
+
+    String name;
+    String status;
+
+
     protected String doInBackground(String... params) {
+        String result = null;
 
         //making connection
         HttpURLConnection connection = null;
@@ -48,16 +58,14 @@ public class HttpData extends AsyncTask<String, String, String> {
             //result before parsing
             Log.d("JSON" , String.valueOf(data));
 
-            String result = JSONtoData(json);
-            //result
-            Log.d("JSON RESPONSE" , result);
+            result = JSONtoData(json);
 
             return result;
 
         } catch (IOException e){
             e.printStackTrace();
 
-            Log.d(InternetConnection.LOG_TAG ,  e.getMessage());
+            Log.d("ERROR" ,  e.getMessage());
             //if there no is no connection stop the whole connection proces
         } finally {
             if (connection != null) {
@@ -76,8 +84,6 @@ public class HttpData extends AsyncTask<String, String, String> {
 
     protected String JSONtoData(String jsonString){
 
-        String name = null;
-
         try {
             JSONObject reader = new JSONObject(jsonString);
 
@@ -91,7 +97,12 @@ public class HttpData extends AsyncTask<String, String, String> {
 
                 name = jsonObject.getString("name");
 
-                Log.d("JSON NAME", name);
+                status = jsonObject.getString("status");
+
+                status_array.add(status);
+                name_array.add(name);
+
+                Log.d("JSON ARRAY", String.valueOf(status_array));
             }
 
             return name;
@@ -102,4 +113,14 @@ public class HttpData extends AsyncTask<String, String, String> {
             return "decode Failed";
         }
     }
+
+    @Override
+    protected void  onPostExecute(String s) {
+        super.onPostExecute(s);
+        if (s != null){
+            new MainActivity().updateList(name_array , status_array);
+        }
+
+    }
+    //TODO Make function for detail page
 }
