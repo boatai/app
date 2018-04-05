@@ -92,8 +92,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
         }
 
         CameraOverlay cameraoverlay = new CameraOverlay(this);
-
-        addContentView(cameraoverlay, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+        addContentView(cameraoverlay, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
     @Override
