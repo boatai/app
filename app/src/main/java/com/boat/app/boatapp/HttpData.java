@@ -52,14 +52,13 @@ public class HttpData extends AsyncTask<String, String, String> {
             //result
             Log.d("JSON RESPONSE" , result);
 
-             //TODO: send data back and put in listview!
-
             return result;
 
         } catch (IOException e){
             e.printStackTrace();
 
             Log.d(InternetConnection.LOG_TAG ,  e.getMessage());
+            //if there no is no connection stop the whole connection proces
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -75,26 +74,32 @@ public class HttpData extends AsyncTask<String, String, String> {
         return null;
     }
 
-    public String JSONtoData(String jsonString){
+    protected String JSONtoData(String jsonString){
+
+        String name = null;
+
         try {
             JSONObject reader = new JSONObject(jsonString);
 
-            JSONObject p = (JSONObject) ((reader.getJSONArray("packages"))).get(0);
+            JSONArray p = reader.getJSONArray("packages");
 
-            return p.getString("name");
+            Log.d("JSON LENGTH" , String.valueOf(p.length()));
+
+            for (int i = 0 ; i < p.length(); i++) {
+
+                JSONObject jsonObject = p.getJSONObject(i);
+
+                name = jsonObject.getString("name");
+
+                Log.d("JSON NAME", name);
+            }
+
+            return name;
+
         } catch (JSONException e ){
             e.printStackTrace();
 
-            Log.d("JSON", "DECODE FAILED");
-
             return "decode Failed";
         }
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-
-        Log.d("Result" , result);
     }
 }

@@ -17,6 +17,7 @@ public class InternetConnection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_internet_connection);
+
     }
     public void TestInternet(View v) throws ExecutionException, InterruptedException {
         Log.d("test", "Button is working");
