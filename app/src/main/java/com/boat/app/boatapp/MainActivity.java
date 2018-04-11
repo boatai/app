@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -28,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ListView packagesList;
     customAdapter customAdapter;
 
-    String[] packages;
-    String[] statusPackages;
+    String[] packages =null;
+    String[] statusPackages = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         new HttpData().execute(link);
 
-        packagesList = findViewById(R.id.listview);
-//
-        customAdapter = new customAdapter();
+        if (packages == null){
+            Toast.makeText(this, "Loading....",
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Log.d("DATA" , "DATA IS ER NOG NIET");
 
-        packagesList.setAdapter(customAdapter);
+            Toast.makeText(this, "Done",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+//        packagesList = findViewById(R.id.listview);
+////
+//        customAdapter = new customAdapter();
+//
+//        packagesList.setAdapter(customAdapter);
 
     }
     @Override
@@ -70,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     class customAdapter extends BaseAdapter{
-            @Override
+        @Override
             public int getCount() {
                 return packages.length;
             }

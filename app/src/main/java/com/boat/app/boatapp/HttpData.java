@@ -1,5 +1,6 @@
 package com.boat.app.boatapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -117,8 +118,11 @@ public class HttpData extends AsyncTask<String, String, String> {
     @Override
     protected void  onPostExecute(String s) {
         super.onPostExecute(s);
+        Log.d("WHAT IS S" , s);
         if (s != null){
             new MainActivity().updateList(name_array , status_array);
+        }else{
+            Log.d("INTERNET" , "THERE IS NO INTERNET");
         }
 
     }
