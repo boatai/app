@@ -18,6 +18,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.boat.app.boatapp.barcode.BarcodeCaptureActivity;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +32,8 @@ import java.util.Objects;
 import static com.boat.app.boatapp.R.layout.activity_internet_connection;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
+    private static final int BARCODE_READER_REQUEST_CODE = 1;
+
 
     public customAdapter CustomAdapter;
     ListView packageList;
@@ -71,8 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.fab:
-                Intent intent = new Intent(this, Qrcode.class);
-                startActivity(intent);
+                Intent intent = new Intent(this, BarcodeCaptureActivity.class);
+                startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+
                 break;
         }
     }
@@ -83,6 +90,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.CustomAdapter.refreshList(name , status);
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if (requestCode == BARCODE_READER_REQUEST_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+
+                if (data != null) {
+                    String barcode = data.getStringExtra(BarcodeCaptureActivity.BarcodeObject);
+                    Toast.makeText(this, barcode,
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(this, "Denk het niet Job",
+                            Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     class customAdapter extends BaseAdapter{
 
         List<String> packagesName = new ArrayList<>();

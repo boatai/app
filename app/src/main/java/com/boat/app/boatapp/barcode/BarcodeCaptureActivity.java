@@ -98,10 +98,14 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
     @Override
     public void onDetectedQrCode(Barcode barcode) {
         if (barcode != null) {
-            Intent intent = new Intent();
-            intent.putExtra(BarcodeObject, barcode);
-            setResult(CommonStatusCodes.SUCCESS, intent);
-            finish();
+            String[] barcodeValues = barcode.displayValue.split("\\W+");
+
+            if(barcodeValues[0].equals("BOATAI")) {
+                Intent intent = new Intent();
+                intent.putExtra(BarcodeObject, barcodeValues[1]);
+                setResult(CommonStatusCodes.SUCCESS, intent);
+                finish();
+            }
         }
     }
 
