@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == CommonStatusCodes.SUCCESS) {
 
                 if (data != null) {
-                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    Toast.makeText(this, barcode.displayValue,
+                    String barcode = data.getStringExtra(BarcodeCaptureActivity.BarcodeObject);
+                    Toast.makeText(this, barcode,
                             Toast.LENGTH_SHORT).show();
 
                 } else {
