@@ -33,7 +33,7 @@
                 android:layout_width="143dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Large Text"
+                android:text="Loading..."
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </LinearLayout>
@@ -54,7 +54,7 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/textView3"
             android:layout_marginEnd="59dp"
-            android:text="TextView"
+            android:text="Loading..."
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 

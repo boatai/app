@@ -2,6 +2,7 @@ package com.boat.app.boatapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,16 +23,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static com.boat.app.boatapp.R.layout.activity_internet_connection;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    public ListView packagesList;
-    customAdapter customAdapter;
+    public customAdapter CustomAdapter;
+    ListView packageList;
 
-    String[] packages =null;
-    String[] statusPackages = null;
+    List<String> packages = new ArrayList<String>();
+    List<String> statusPackages = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,28 +45,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
-        //setting up the custom layout of for the listview
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //setting starting values
+        this.packages.add("Loading...");
+        this.statusPackages.add("Loading...");
+
+        //getting data in listview
+        this.packageList = findViewById(R.id.listview);
+        this.CustomAdapter = new customAdapter(this.packages , this.statusPackages);
+        this.packageList.setAdapter(CustomAdapter );
+
         String link = "http://vps1.nickforall.nl:6123/packages";
 
-        new HttpData().execute(link);
-
-        if (packages == null){
-            Toast.makeText(this, "Loading....",
-                    Toast.LENGTH_SHORT).show();
-        }else{
-            Log.d("DATA" , "DATA IS ER NOG NIET");
-
-            Toast.makeText(this, "Done",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-//        packagesList = findViewById(R.id.listview);
-////
-//        customAdapter = new customAdapter();
-//
-//        packagesList.setAdapter(customAdapter);
-
+        HttpData httpData = new HttpData(this , this);
+        httpData.execute(link);
     }
+
     @Override
     public void onClick(View v) {
 
@@ -71,20 +73,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab:
                 Intent intent = new Intent(this, Qrcode.class);
                 startActivity(intent);
-
                 break;
         }
     }
     public void updateList(List<String> name , List<String> status){
-        packages = name.toArray(new String[name.size()]);
+        //Logging data we get
+        Log.d("DATA" , "NAME"+ String.valueOf(name));
 
-        statusPackages = status.toArray(new String[status.size()]);
+        this.CustomAdapter.refreshList(name , status);
 
     }
     class customAdapter extends BaseAdapter{
+
+        List<String> packagesName = new ArrayList<>();
+        List<String> packagesStatus = new ArrayList<>();
+
+        public customAdapter (List<String> name , List<String> status){
+            packagesStatus = status;
+            packagesName = name;
+        }
+        public void refreshList (List<String> name , List<String> status){
+            this.packagesName.clear();
+            this.packagesName.addAll(name);
+
+            this.packagesStatus.clear();
+            this.packagesStatus.addAll(status);
+
+            Log.d("CustomAdapter" , "Wordt de data geupdate" + name);
+
+            this.notifyDataSetChanged();
+        }
         @Override
             public int getCount() {
-                return packages.length;
+                return this.packagesName.size();
             }
 
             @Override
@@ -108,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 TextView pacakage_name = convertView.findViewById(R.id.tV_name);
                 TextView status = convertView.findViewById(R.id.tv_status);
 
-                pacakage_name.setText(packages[position]);
-                status.setText(statusPackages[position]);
+                pacakage_name.setText(this.packagesName.get(position));
+                status.setText(this.packagesStatus.get(position));
 
                 return convertView;
         }

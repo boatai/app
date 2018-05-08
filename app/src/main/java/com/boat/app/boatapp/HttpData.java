@@ -1,8 +1,10 @@
 package com.boat.app.boatapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,10 +14,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * Created by rvoor on 3-4-2018.
@@ -26,9 +31,17 @@ public class HttpData extends AsyncTask<String, String, String> {
     List<String> name_array = new ArrayList<String>();
     List<String> status_array = new ArrayList<String>();
 
+
+    private Context context;
+    private WeakReference<MainActivity> mainActivityWeakReference;
+
     String name;
     String status;
 
+    public HttpData(Context context , MainActivity mainActivity){
+        this.context = context;
+        this.mainActivityWeakReference = new WeakReference<MainActivity>(mainActivity);
+    }
 
     protected String doInBackground(String... params) {
         String result = null;
@@ -118,12 +131,14 @@ public class HttpData extends AsyncTask<String, String, String> {
     @Override
     protected void  onPostExecute(String s) {
         super.onPostExecute(s);
-        Log.d("WHAT IS S" , s);
-        if (s != null){
-            new MainActivity().updateList(name_array , status_array);
-        }else{
-            Log.d("INTERNET" , "THERE IS NO INTERNET");
-        }
+        Log.d("onpost" , "werkt het nu wel" + s);
+
+
+
+        this.mainActivityWeakReference.get().updateList(name_array , status_array);
+
+        Toast.makeText(this.context, "Loading is Done",
+                Toast.LENGTH_LONG).show();
 
     }
     //TODO Make function for detail page
