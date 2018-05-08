@@ -23,9 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Qrcode"
-            android:parentActivityName=".MainActivity" />
-        <activity
             android:name=".InternetConnection"
             android:parentActivityName=".MainActivity" />
         <activity
