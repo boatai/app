@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         //getting data from API
-//        String link = "http://vps1.nickforall.nl:6123/packages";
-//
-//        HttpData httpData = new HttpData(this , this);
-//        httpData.execute(link);
+        String link = "http://vps1.nickforall.nl:6123/users/5afa9d69b3e20cd5ef85433e/packages";
+
+        HttpData httpData = new HttpData(this , this);
+        httpData.execute(link);
     }
 
     @Override
