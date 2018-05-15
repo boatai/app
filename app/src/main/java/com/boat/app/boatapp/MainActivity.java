@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +34,6 @@ import static com.boat.app.boatapp.R.layout.activity_internet_connection;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
     private static final int BARCODE_READER_REQUEST_CODE = 1;
-
 
     public customAdapter CustomAdapter;
     ListView packageList;
@@ -66,10 +66,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.CustomAdapter = new customAdapter(this.packages , this.statusPackages);
         this.packageList.setAdapter(CustomAdapter );
 
-        String link = "http://vps1.nickforall.nl:6123/packages";
+        packageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View convertView,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(),
+                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        .show();
+                Intent intent = new Intent(getApplicationContext() , detailActivity.class);
+                startActivity(intent);
 
-        HttpData httpData = new HttpData(this , this);
-        httpData.execute(link);
+            }
+        });
+        //getting data from API
+//        String link = "http://vps1.nickforall.nl:6123/packages";
+//
+//        HttpData httpData = new HttpData(this , this);
+//        httpData.execute(link);
     }
 
     @Override
@@ -162,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 pacakage_name.setText(this.packagesName.get(position));
                 status.setText(this.packagesStatus.get(position));
+
+
 
                 return convertView;
         }
