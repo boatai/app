@@ -53,7 +53,7 @@ public class OverviewFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
-                Intent intent = new Intent(getActivity().getApplicationContext() , detailActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext() , DetailActivity.class);
                 startActivity(intent);
 
             }

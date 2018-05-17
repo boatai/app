@@ -33,7 +33,7 @@
             android:name=".barcode.BarcodeCaptureActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".detailActivity"
+            android:name=".DetailActivity"
             android:parentActivityName=".MainActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,10 +46,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MapsFragment"
-            android:label="@string/title_activity_maps" />
     </application>
 
 </manifest>

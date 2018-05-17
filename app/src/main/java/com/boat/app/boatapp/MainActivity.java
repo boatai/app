@@ -155,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, barcode,
                             Toast.LENGTH_SHORT).show();
 
+                    new SendPostRequest(this).execute(barcode);
+
                 } else {
                     Toast.makeText(this, "Denk het niet Job",
                             Toast.LENGTH_SHORT).show();

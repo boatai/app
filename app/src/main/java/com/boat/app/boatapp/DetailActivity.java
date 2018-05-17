@@ -3,7 +3,7 @@ package com.boat.app.boatapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class detailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
