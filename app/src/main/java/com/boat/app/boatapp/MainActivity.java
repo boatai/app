@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // check if second tab is active
             @Override
             public void onPageSelected(int tab) {
-                if ( tab == 1 ){
+                if ( tab != 0 ){
                     appBarLayout.setTranslationY(-toolbar.getHeight());
                     mViewPager.setTranslationY(-toolbar.getHeight());
                 }
