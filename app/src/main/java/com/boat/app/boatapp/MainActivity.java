@@ -1,88 +1,136 @@
 package com.boat.app.boatapp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.boat.app.boatapp.barcode.BarcodeCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.barcode.Barcode;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import static com.boat.app.boatapp.R.layout.activity_internet_connection;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int BARCODE_READER_REQUEST_CODE = 1;
 
-    public customAdapter CustomAdapter;
-    ListView packageList;
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    List<String> packages = new ArrayList<String>();
-    List<String> statusPackages = new ArrayList<String>();
-
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    private ViewPager mViewPager;
+    private Toolbar toolbar;
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+
+        toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+
+        appBarLayout = findViewById(R.id.app_bar_layout);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+
+        // Create the adapter that will return a fragment
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener() {
+
+            // can't remove onPageScrolled & onPageScrollStateChanged functions
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                double offsetWidth = (positionOffsetPixels + 0.00) / toolbar.getWidth();
+                double offsetHeight = offsetWidth * toolbar.getHeight();
+
+                if(offsetHeight <= toolbar.getHeight() && positionOffsetPixels != 0){
+                    appBarLayout.setTranslationY((float) -offsetHeight);
+                    mViewPager.setTranslationY((float) -offsetHeight);
+
+                }
+            }
+
+            // check if second tab is active
+            @Override
+            public void onPageSelected(int tab) {
+                if ( tab == 1 ){
+                    appBarLayout.setTranslationY(-toolbar.getHeight());
+                    mViewPager.setTranslationY(-toolbar.getHeight());
+                }
+                else{
+                    appBarLayout.setTranslationY(0);
+                    mViewPager.setTranslationY(0);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+
+        });
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    /**
+     * Returns the right fragment
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        //setting starting values
-        this.packages.add("Loading...");
-        this.statusPackages.add("Loading...");
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-        //getting data in listview
-        this.packageList = findViewById(R.id.listview);
-        this.CustomAdapter = new customAdapter(this.packages , this.statusPackages);
-        this.packageList.setAdapter(CustomAdapter );
+        @Override
+        public Fragment getItem(int position) {
+            OverviewFragment overview = new OverviewFragment();
+            MapsFragment maps = new MapsFragment();
 
-        packageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View convertView,
-                                    int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
-                Intent intent = new Intent(getApplicationContext() , detailActivity.class);
-                startActivity(intent);
+            switch(position){
+                case 0:
+                    return overview;
 
+                case 1:
+                    return maps;
+
+                default:
+//                    Because otherwise android will kill himself
+                    return overview;
             }
-        });
-        //getting data from API
-//        String link = "http://vps1.nickforall.nl:6123/packages";
-//
-//        HttpData httpData = new HttpData(this , this);
-//        httpData.execute(link);
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 
     @Override
@@ -92,21 +140,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab:
                 Intent intent = new Intent(this, BarcodeCaptureActivity.class);
                 startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
-
                 break;
         }
-    }
-    public void updateList(List<String> name , List<String> status){
-        //Logging data we get
-        Log.d("DATA" , "NAME"+ String.valueOf(name));
-
-        this.CustomAdapter.refreshList(name , status);
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 
         if (requestCode == BARCODE_READER_REQUEST_CODE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
@@ -124,61 +163,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    class customAdapter extends BaseAdapter{
-
-        List<String> packagesName = new ArrayList<>();
-        List<String> packagesStatus = new ArrayList<>();
-
-        public customAdapter (List<String> name , List<String> status){
-            packagesStatus = status;
-            packagesName = name;
-        }
-        public void refreshList (List<String> name , List<String> status){
-            this.packagesName.clear();
-            this.packagesName.addAll(name);
-
-            this.packagesStatus.clear();
-            this.packagesStatus.addAll(status);
-
-            Log.d("CustomAdapter" , "Wordt de data geupdate" + name);
-
-            this.notifyDataSetChanged();
-        }
-        @Override
-            public int getCount() {
-                return this.packagesName.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @SuppressLint("ViewHolder")
-            @Override
-            public View getView(int position, View convertView, ViewGroup arg2) {
-
-                LayoutInflater inflater = getLayoutInflater();
-
-                convertView = inflater.inflate(R.layout.package_listview, null);
-
-                TextView pacakage_name = convertView.findViewById(R.id.tV_name);
-                TextView status = convertView.findViewById(R.id.tv_status);
-
-                pacakage_name.setText(this.packagesName.get(position));
-                status.setText(this.packagesStatus.get(position));
-
-
-
-                return convertView;
         }
     }
 }

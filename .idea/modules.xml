@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Roel\code\boat.ai\app\app\app.iml" filepath="C:\Roel\code\boat.ai\app\app\app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app-app.iml" filepath="$PROJECT_DIR$/app/app-app.iml" />
+      <module fileurl="file://C:\Users\robin\Documents\school\HRO\HRO-17-18\periode3\tle\boatai\app.iml" filepath="C:\Users\robin\Documents\school\HRO\HRO-17-18\periode3\tle\boatai\app.iml" />
       <module fileurl="file://C:\Users\robin\Documents\school\HRO\HRO-17-18\periode3\tle\boatai\app\app-app.iml" filepath="C:\Users\robin\Documents\school\HRO\HRO-17-18\periode3\tle\boatai\app\app-app.iml" />
       <module fileurl="file://C:\Users\robin\Documents\school\HRO\HRO-17-18\periode3\tle\boatai\boat.ai-app.iml" filepath="C:\Users\robin\Documents\school\HRO\HRO-17-18\periode3\tle\boatai\boat.ai-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/boatai.iml" filepath="$PROJECT_DIR$/boatai.iml" />
       <module fileurl="file://C:\Roel\code\boat.ai\app\boatai.iml" filepath="C:\Roel\code\boat.ai\app\boatai.iml" />
     </modules>
   </component>

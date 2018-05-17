@@ -7,6 +7,7 @@
     tools:context="com.boat.app.boatapp.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -22,7 +23,32 @@
             app:title="@string/app_name"
             app:titleMarginStart="32dp"/>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_overview" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_maps" />
+
+        </android.support.design.widget.TabLayout>
+
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -32,14 +58,5 @@
         android:layout_margin="@dimen/fab_margin"
         android:textColor="@android:color/white"
         app:srcCompat="@drawable/ic_add" />
-
-    <include
-        layout="@layout/content_main"
-        android:layout_width="381dp"
-        android:layout_height="567dp"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="27dp" />
 
 </android.support.design.widget.CoordinatorLayout>

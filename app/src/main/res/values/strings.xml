@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">boatapp</string>
+    <string name="app_name">BOAT.AI</string>
     <string name="no_barcode_captured">Geen barcode gevonden</string>
     <string name="scan_barcode_button">Scan barcode</string>
     <string name="low_storage_error">Error (low storage error)</string>
@@ -7,4 +7,7 @@
     <string name="no_camera_permission">No Camera Permission</string>
     <string name="barcode_error_format">Error (barcode error format)</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="tab_overview">Overview</string>
+    <string name="tab_maps">Maps</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.boat.app.boatapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,14 +31,14 @@ public class HttpData extends AsyncTask<String, String, String> {
 
 
     private Context context;
-    private WeakReference<MainActivity> mainActivityWeakReference;
+    private WeakReference<OverviewFragment> overviewActivityWeakReference;
 
     String name;
     String status;
 
-    public HttpData(Context context , MainActivity mainActivity){
+    public HttpData(Context context , OverviewFragment overviewFragment){
         this.context = context;
-        this.mainActivityWeakReference = new WeakReference<MainActivity>(mainActivity);
+        this.overviewActivityWeakReference = new WeakReference<OverviewFragment>(overviewFragment);
     }
 
     protected String doInBackground(String... params) {
@@ -135,7 +133,7 @@ public class HttpData extends AsyncTask<String, String, String> {
 
 
 
-        this.mainActivityWeakReference.get().updateList(name_array , status_array);
+        this.overviewActivityWeakReference.get().updateList(name_array , status_array);
 
         Toast.makeText(this.context, "Loading is Done",
                 Toast.LENGTH_LONG).show();
