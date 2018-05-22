@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(offsetHeight <= toolbar.getHeight() && positionOffsetPixels != 0){
                     appBarLayout.setTranslationY((float) -offsetHeight);
                     mViewPager.setTranslationY((float) -offsetHeight);
-
                 }
             }
 
