@@ -17,6 +17,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -28,6 +29,7 @@ public class HttpData extends AsyncTask<String, String, String> {
 
     List<String> name_array = new ArrayList<String>();
     List<String> status_array = new ArrayList<String>();
+    Boolean lock[];
 
 
     private Context context;
@@ -103,6 +105,8 @@ public class HttpData extends AsyncTask<String, String, String> {
 
             Log.d("JSON LENGTH" , String.valueOf(p.length()));
 
+            lock = new Boolean[p.length()];
+
             for (int i = 0 ; i < p.length(); i++) {
 
                 JSONObject jsonObject = p.getJSONObject(i);
@@ -110,6 +114,8 @@ public class HttpData extends AsyncTask<String, String, String> {
                 name = jsonObject.getString("name");
 
                 status = jsonObject.getString("status");
+
+                lock[i] = Boolean.valueOf(jsonObject.getString("unlocked"));
 
                 status_array.add(status);
                 name_array.add(name);
@@ -132,8 +138,7 @@ public class HttpData extends AsyncTask<String, String, String> {
         Log.d("onpost" , "werkt het nu wel" + s);
 
 
-
-        this.overviewActivityWeakReference.get().updateList(name_array , status_array);
+        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock);
 
         Toast.makeText(this.context, "Loading is Done",
                 Toast.LENGTH_LONG).show();

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OverviewFragment extends Fragment {
@@ -25,6 +26,7 @@ public class OverviewFragment extends Fragment {
 
     List<String> packages = new ArrayList<String>();
     List<String> statusPackages = new ArrayList<String>();
+    Boolean lockStatus[];
 
 
     @Override
@@ -54,19 +56,29 @@ public class OverviewFragment extends Fragment {
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
                 Intent intent = new Intent(getActivity().getApplicationContext() , DetailActivity.class);
+                intent.putStringArrayListExtra("name" , (ArrayList<String>) packages);
+                intent.putStringArrayListExtra("status" , (ArrayList<String>) statusPackages);
+                intent.putExtra("lockStatus" , lockStatus);
                 startActivity(intent);
-
             }
         });
         HttpData httpData = new HttpData(getActivity(), this);
         httpData.execute(GETLINK);
     }
 
-    public void updateList(List<String> name , List<String> status){
+    public void updateList(List<String> name , List<String> status , Boolean lockstatus[]){
         //Logging data we get
         Log.d("DATA" , "NAME"+ String.valueOf(name));
 
         this.CustomAdapter.refreshList(name , status);
+
+        this.packages.clear();
+        this.packages.addAll(name);
+
+        this.statusPackages.clear();
+        this.statusPackages.addAll(status);
+
+        this.lockStatus = lockstatus;
 
     }
 
