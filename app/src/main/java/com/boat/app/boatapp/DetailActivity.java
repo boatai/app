@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Eat ass", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Button is working", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
