@@ -8,8 +8,8 @@
     <string name="barcode_error_format">Error (barcode error format)</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_maps">Map</string>
-    <string name="tab_overview">Overview</string>
-    <string name="tab_maps">Maps</string>
+    <string name="tab_overview">Your Packages</string>
+    <string name="tab_maps">Wheres the boat?</string>
     <string name="title_activity_detail">Google maps?</string>
     <string name="large_text">Hier komt allemaal leuke shit</string>
     <string name="action_settings">Settings</string>

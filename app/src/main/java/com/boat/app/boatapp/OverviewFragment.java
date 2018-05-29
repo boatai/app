@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -125,8 +126,14 @@ public class OverviewFragment extends Fragment {
 
             convertView = inflater.inflate(R.layout.package_listview, null);
 
-            TextView pacakage_name = convertView.findViewById(R.id.tV_name);
+            TextView pacakage_name = convertView.findViewById(R.id.tv_name);
             TextView status = convertView.findViewById(R.id.tv_status);
+
+            ImageView status_icon = convertView.findViewById(R.id.ic_status);
+
+            if(this.packagesStatus.get(position).equals("Currently on Boat")){
+                status_icon.setImageResource(R.drawable.ic_circle_true);
+            }
 
             pacakage_name.setText(this.packagesName.get(position));
             status.setText(this.packagesStatus.get(position));
