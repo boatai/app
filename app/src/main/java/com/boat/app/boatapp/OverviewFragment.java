@@ -35,6 +35,12 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     SwipeRefreshLayout swipeRefreshLayout;
     List<String> packages = new ArrayList<String>();
     List<String> statusPackages = new ArrayList<String>();
+    List<String> packagesSize = new ArrayList<String>();
+    List<String> packagesWeight = new ArrayList<String>();
+    List<String> deliveryData = new ArrayList<String>();
+
+
+
     Boolean lockStatus[];
 
 
@@ -72,9 +78,12 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 .show();
                     }else{
                         Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
-                        intent.putExtra("name", packages.get(position));
-                        intent.putExtra("status", statusPackages.get(position));
+                        intent.putExtra("packageName", packages.get(position));
+                        intent.putExtra("packageStatus", statusPackages.get(position));
                         intent.putExtra("lockStatus", lockStatus[position]);
+                        intent.putExtra("packageSize" , packagesSize.get(position));
+                        intent.putExtra("packageWeight" , packagesWeight.get(position));
+                        intent.putExtra("deliveryData" , deliveryData.get(position));
                         startActivity(intent);
                     }
                 }
@@ -84,21 +93,23 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         httpData.execute(GETLINK);
     }
 
-    public void updateList(List<String> name , List<String> status , Boolean lockstatus[]){
+    public void updateList(List<String> name , List<String> status , Boolean lockstatus[] , List<String> size, List<String> weight , List<String> date){
         //Logging data we get
         Log.d("DATA" , "NAME"+ String.valueOf(name));
 
-        this.CustomAdapter.refreshList(name , status,  lockstatus);
+        this.CustomAdapter.refreshList(name , status,  lockstatus );
 
         this.packages.clear();
         this.packages.addAll(name);
-
         this.statusPackages.clear();
         this.statusPackages.addAll(status);
 
-
         this.lockStatus = new Boolean[0];
         this.lockStatus = lockstatus;
+
+        this.packagesSize.addAll(size);
+        this.packagesWeight.addAll(weight);
+        this.deliveryData.addAll(date);
 
         swipeRefreshLayout.setRefreshing(false);
     }

@@ -29,6 +29,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private CoordinatorLayout coordinatorLayout;
     private String namePackages;
     private String statusPackages;
+    private String sizePackage;
+    private String weightPackage;
+    private String deliveryDate;
     private Boolean statusLock;
 
 
@@ -43,9 +46,14 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         Intent intent = getIntent();
 
         //get data from selected packages
-        this.namePackages = intent.getStringExtra("name");
-        this.statusPackages = intent.getStringExtra("status");
-        this.statusLock = intent.getBooleanExtra("lockStatus" , false);
+        this.namePackages = intent.getStringExtra("packageName");
+        this.statusPackages = intent.getStringExtra("packageStatus");
+        this.statusLock = intent.getExtras().getBoolean("lockStatus");
+        this.sizePackage = intent.getStringExtra("packageSize");
+        this.weightPackage = intent.getStringExtra("packageWeight");
+        this.deliveryDate = intent.getStringExtra("deliveryData");
+
+        Log.d("INTENTDATA" , this.namePackages + this.statusPackages + this.statusLock + sizePackage + this.weightPackage + this.deliveryDate);
 
         //get layout
         coordinatorLayout = findViewById(R.id.cl_layout);
