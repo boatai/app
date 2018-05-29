@@ -2,6 +2,9 @@ package com.boat.app.boatapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,26 +44,32 @@ public class OverviewFragment extends Fragment {
         super.onStart();
 
         //setting starting values
-        this.packages.add("Loading...");
-        this.statusPackages.add("Loading...");
+        this.packages.add(getResources().getString(R.string.loading));
+        this.statusPackages.add(getResources().getString(R.string.loading));
 
         //getting data in listview
         this.packageList = getView().findViewById(R.id.listview);
-        this.CustomAdapter = new customAdapter(this.packages , this.statusPackages);
+        this.CustomAdapter = new customAdapter(this.packages , this.statusPackages, this.lockStatus);
         this.packageList.setAdapter(CustomAdapter );
 
         packageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View convertView,
                                     int position, long id) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
-                Intent intent = new Intent(getActivity().getApplicationContext() , DetailActivity.class);
-                intent.putExtra("name" , packages.get(position));
-                intent.putExtra("status" , statusPackages.get(position));
-                intent.putExtra("lockStatus" , lockStatus[position]);
-                startActivity(intent);
+
+                if (lockStatus != null) {
+                    if (lockStatus[position]) {
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                R.string.delivered, Toast.LENGTH_SHORT)
+                                .show();
+                    }else{
+                        Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                        intent.putExtra("name", packages.get(position));
+                        intent.putExtra("status", statusPackages.get(position));
+                        intent.putExtra("lockStatus", lockStatus[position]);
+                        startActivity(intent);
+                    }
+                }
             }
         });
         HttpData httpData = new HttpData(getActivity(), this);
@@ -71,7 +80,7 @@ public class OverviewFragment extends Fragment {
         //Logging data we get
         Log.d("DATA" , "NAME"+ String.valueOf(name));
 
-        this.CustomAdapter.refreshList(name , status);
+        this.CustomAdapter.refreshList(name , status,  lockstatus);
 
         this.packages.clear();
         this.packages.addAll(name);
@@ -79,6 +88,8 @@ public class OverviewFragment extends Fragment {
         this.statusPackages.clear();
         this.statusPackages.addAll(status);
 
+
+        this.lockStatus = new Boolean[0];
         this.lockStatus = lockstatus;
 
     }
@@ -87,17 +98,22 @@ public class OverviewFragment extends Fragment {
 
         List<String> packagesName = new ArrayList<>();
         List<String> packagesStatus = new ArrayList<>();
+        Boolean lockStatus[];
 
-        public customAdapter (List<String> name , List<String> status){
+        public customAdapter (List<String> name , List<String> status, Boolean lock[]){
             packagesStatus = status;
             packagesName = name;
+            lockStatus = lock;
         }
-        public void refreshList (List<String> name , List<String> status){
+        public void refreshList (List<String> name , List<String> status,  Boolean lock[]){
             this.packagesName.clear();
             this.packagesName.addAll(name);
 
             this.packagesStatus.clear();
             this.packagesStatus.addAll(status);
+
+            this.lockStatus = new Boolean[0];
+            this.lockStatus = lock;
 
             Log.d("CustomAdapter" , "Wordt de data geupdate" + name);
 
@@ -126,7 +142,7 @@ public class OverviewFragment extends Fragment {
 
             convertView = inflater.inflate(R.layout.package_listview, null);
 
-            TextView pacakage_name = convertView.findViewById(R.id.tv_name);
+            TextView package_name = convertView.findViewById(R.id.tv_name);
             TextView status = convertView.findViewById(R.id.tv_status);
 
             ImageView status_icon = convertView.findViewById(R.id.ic_status);
@@ -135,10 +151,25 @@ public class OverviewFragment extends Fragment {
                 status_icon.setImageResource(R.drawable.ic_circle_true);
             }
 
-            pacakage_name.setText(this.packagesName.get(position));
+            package_name.setText(this.packagesName.get(position));
             status.setText(this.packagesStatus.get(position));
 
+            if(this.lockStatus != null) {
+                if(this.lockStatus[position]){
+                    int textGray = Color.argb(50,0,0, 0);
+                    int bgGray = Color.argb(50,0,0, 0);
 
+                    convertView.setBackgroundColor(bgGray);
+                    package_name.setTextColor(textGray);
+                    status.setTextColor(textGray);
+
+                    ColorMatrix matrix = new ColorMatrix();
+                    matrix.setSaturation(0);
+
+                    ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+                    status_icon.setColorFilter(filter);
+                }
+            }
 
             return convertView;
         }

@@ -140,8 +140,8 @@ public class HttpData extends AsyncTask<String, String, String> {
 
         this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock);
 
-        Toast.makeText(this.context, "Loading is Done",
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(this.context, "Loading is Done",
+//                Toast.LENGTH_LONG).show();
 
     }
     //TODO Make function for detail page

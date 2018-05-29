@@ -13,4 +13,7 @@
     <string name="title_activity_detail">Google maps?</string>
     <string name="large_text">Hier komt allemaal leuke shit</string>
     <string name="action_settings">Settings</string>
+    <string name="loading">Loading</string>
+    <string name="delivered">Package already delivered</string>
+    <string name="scan_qr">Scan QR code</string>
 </resources>

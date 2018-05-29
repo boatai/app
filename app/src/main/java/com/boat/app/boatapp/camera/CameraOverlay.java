@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
+import com.boat.app.boatapp.R;
+
 /**
  * Created by robin on 04-Apr-18.
  */
@@ -59,6 +61,6 @@ public class CameraOverlay extends View {
         paint.setColor(Color.WHITE);
         paint.setTextSize(80);
         paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("Scan QR code", halfWidth, fullHeight-100, paint);
+        canvas.drawText(getResources().getString(R.string.scan_qr), halfWidth, fullHeight-100, paint);
     }
 }
