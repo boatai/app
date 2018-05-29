@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         //collabsible toolbar
         collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
 
-        collapsingToolbarLayout.setTitle("LOL");
+        collapsingToolbarLayout.setTitle("Packages");
 
     }
 
