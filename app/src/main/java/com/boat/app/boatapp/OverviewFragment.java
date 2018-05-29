@@ -107,6 +107,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onRefresh() {
         HttpData httpData = new HttpData(getActivity(), this);
         httpData.execute(GETLINK);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
     }
 
     class customAdapter extends BaseAdapter{
