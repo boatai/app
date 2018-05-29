@@ -1,5 +1,6 @@
 package com.boat.app.boatapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -26,6 +27,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private CoordinatorLayout coordinatorLayout;
+    private String namePackages;
+    private String statusPackages;
+    private Boolean statusLock;
 
 
     @Override
@@ -34,6 +38,15 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+
+        //get data from selected packages
+        this.namePackages = intent.getStringExtra("name");
+        this.statusPackages = intent.getStringExtra("status");
+        this.statusLock = intent.getBooleanExtra("lockStatus" , false);
+
+        Log.d("DATA THAT IS PULLED" , ":" + this.namePackages + this.statusPackages + this.statusLock);
 
         //get layout
         coordinatorLayout = findViewById(R.id.cl_layout);
@@ -50,18 +63,16 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                         .setAction("Action", null).show();
             }
         });
-
         //collabsible toolbar
         collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
 
-        collapsingToolbarLayout.setTitle("Packages");
+        collapsingToolbarLayout.setTitle(this.namePackages);
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         // Add a marker in Sydney and move the camera
         LatLng amsterdam = new LatLng(52.36848, 4.894690);
 //        mMap.addMarker(new MarkerOptions().position(sydney));

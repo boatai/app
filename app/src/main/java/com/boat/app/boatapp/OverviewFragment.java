@@ -56,9 +56,9 @@ public class OverviewFragment extends Fragment {
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
                 Intent intent = new Intent(getActivity().getApplicationContext() , DetailActivity.class);
-                intent.putStringArrayListExtra("name" , (ArrayList<String>) packages);
-                intent.putStringArrayListExtra("status" , (ArrayList<String>) statusPackages);
-                intent.putExtra("lockStatus" , lockStatus);
+                intent.putExtra("name" , packages.get(position));
+                intent.putExtra("status" , statusPackages.get(position));
+                intent.putExtra("lockStatus" , lockStatus[position]);
                 startActivity(intent);
             }
         });
@@ -114,7 +114,7 @@ public class OverviewFragment extends Fragment {
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return this.packagesName.size();
         }
 
         @SuppressLint("ViewHolder")
