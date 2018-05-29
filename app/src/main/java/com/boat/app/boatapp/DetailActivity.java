@@ -1,6 +1,8 @@
 package com.boat.app.boatapp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -35,13 +37,16 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private String weightPackage;
     private String deliveryDate;
     private Boolean statusLock;
+    private Toolbar toolbar;
+
+    private FloatingActionButton fab;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -64,7 +69,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         MapFragment mapFragment = (MapFragment) this.getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,9 +88,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             public void onOffsetChanged(final AppBarLayout appBarLayout, final int verticalOffset) {
                 float scrolling = (appBarLayout.getY() + appBarLayout.getTotalScrollRange());
                 if(scrolling <= 0){
-                    Log.d("SCROLLING", "AppBar is collapsed");
+                    fab.animate().translationY(-(toolbar.getHeight() / 2)).translationX(50);
+                    fab.setCompatElevation(12);
+                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
                 }else{
-                    Log.d("SCROLLING", "AppBar is not collapsed");
+                    fab.animate().translationY(0).translationX(0);
+                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
                 }
             }
         });
