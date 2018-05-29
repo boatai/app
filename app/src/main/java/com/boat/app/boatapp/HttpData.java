@@ -29,6 +29,10 @@ public class HttpData extends AsyncTask<String, String, String> {
 
     List<String> name_array = new ArrayList<String>();
     List<String> status_array = new ArrayList<String>();
+    List<String> packagesSize = new ArrayList<String>();
+    List<String> packagesWeight = new ArrayList<String>();
+    List<String> deliveryData = new ArrayList<String>();
+
     Boolean lock[];
 
 
@@ -37,6 +41,9 @@ public class HttpData extends AsyncTask<String, String, String> {
 
     String name;
     String status;
+    String size;
+    String weight;
+    String date;
 
     public HttpData(Context context , OverviewFragment overviewFragment){
         this.context = context;
@@ -110,13 +117,17 @@ public class HttpData extends AsyncTask<String, String, String> {
                 JSONObject jsonObject = p.getJSONObject(i);
 
                 name = jsonObject.getString("name");
-
                 status = jsonObject.getString("status");
-
                 lock[i] = Boolean.valueOf(jsonObject.getString("unlocked"));
+                size = jsonObject.getString("size");
+                weight = jsonObject.getString("weight");
+                date = jsonObject.getString("deliveryDate");
 
                 status_array.add(status);
                 name_array.add(name);
+                packagesSize.add(size);
+                packagesWeight.add(weight);
+                deliveryData.add(date);
 
                 Log.d("JSON ARRAY", String.valueOf(status_array));
             }
@@ -134,7 +145,7 @@ public class HttpData extends AsyncTask<String, String, String> {
     protected void  onPostExecute(String s) {
         super.onPostExecute(s);
 
-        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock);
+        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock , packagesSize , packagesSize , deliveryData);
 
 //        Toast.makeText(this.context, "Loading is Done",
 //                Toast.LENGTH_LONG).show();
