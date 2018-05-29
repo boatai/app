@@ -103,8 +103,6 @@ public class HttpData extends AsyncTask<String, String, String> {
 
             JSONArray p = reader.getJSONArray("packages");
 
-            Log.d("JSON LENGTH" , String.valueOf(p.length()));
-
             lock = new Boolean[p.length()];
 
             for (int i = 0 ; i < p.length(); i++) {
@@ -135,8 +133,6 @@ public class HttpData extends AsyncTask<String, String, String> {
     @Override
     protected void  onPostExecute(String s) {
         super.onPostExecute(s);
-        Log.d("onpost" , "werkt het nu wel" + s);
-
 
         this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock);
 

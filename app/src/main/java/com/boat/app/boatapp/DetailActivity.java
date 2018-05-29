@@ -47,8 +47,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         this.statusPackages = intent.getStringExtra("status");
         this.statusLock = intent.getBooleanExtra("lockStatus" , false);
 
-        Log.d("DATA THAT IS PULLED" , ":" + this.namePackages + this.statusPackages + this.statusLock);
-
         //get layout
         coordinatorLayout = findViewById(R.id.cl_layout);
 

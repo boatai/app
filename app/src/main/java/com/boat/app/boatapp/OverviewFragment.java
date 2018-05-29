@@ -5,10 +5,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,12 +27,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OverviewFragment extends Fragment {
+public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String GETLINK = "http://vps1.nickforall.nl:6123/users/5afa9d69b3e20cd5ef85433e/packages";
 
     public customAdapter CustomAdapter;
     ListView packageList;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     List<String> packages = new ArrayList<String>();
     List<String> statusPackages = new ArrayList<String>();
     Boolean lockStatus[];
@@ -47,13 +52,16 @@ public class OverviewFragment extends Fragment {
         this.packages.add(getResources().getString(R.string.loading));
         this.statusPackages.add(getResources().getString(R.string.loading));
 
+        //get the id of the refresh layout
+        swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         //getting data in listview
         this.packageList = getView().findViewById(R.id.listview);
         this.CustomAdapter = new customAdapter(this.packages , this.statusPackages, this.lockStatus);
         this.packageList.setAdapter(CustomAdapter );
 
         packageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
             public void onItemClick(AdapterView<?> parent, View convertView,
                                     int position, long id) {
 
@@ -92,6 +100,13 @@ public class OverviewFragment extends Fragment {
         this.lockStatus = new Boolean[0];
         this.lockStatus = lockstatus;
 
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        HttpData httpData = new HttpData(getActivity(), this);
+        httpData.execute(GETLINK);
     }
 
     class customAdapter extends BaseAdapter{
