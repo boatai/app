@@ -82,6 +82,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitle(this.namePackages);
 
+        // change FloatingActionButton to a normal button in the toolbar
         AppBarLayout appBarLayout = findViewById(R.id.app_bar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
