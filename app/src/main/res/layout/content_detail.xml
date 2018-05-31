@@ -60,7 +60,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="10dp"
             android:background="@drawable/bg_purple_line"
             android:orientation="horizontal">
 
@@ -96,6 +96,13 @@
             android:weightSum="100"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_height="15dp"
+                android:layout_width="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_time" />
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_weight="50"
@@ -114,6 +121,13 @@
                     android:text="18 mei 2018" />
             </LinearLayout>
 
+            <ImageView
+                android:layout_height="15dp"
+                android:layout_width="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_circle_true" />
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_weight="50"
@@ -124,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Detailed Status" />
+                    android:text="Status" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -140,6 +154,13 @@
             android:weightSum="100"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
+
+            <ImageView
+                android:layout_height="15dp"
+                android:layout_width="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_size" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -158,6 +179,13 @@
                     android:textSize="12sp"
                     android:text="30 x 20 x 10 cm" />
             </LinearLayout>
+
+            <ImageView
+                android:layout_height="15dp"
+                android:layout_width="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_box" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
