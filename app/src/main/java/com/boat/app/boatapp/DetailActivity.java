@@ -16,12 +16,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static java.math.RoundingMode.DOWN;
 import static java.math.RoundingMode.UP;
@@ -40,6 +47,38 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private Toolbar toolbar;
 
     private FloatingActionButton fab;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //collabsible toolbar
+        collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitle(this.namePackages);
+        //setting text size
+        TextView size = findViewById(R.id.packageSize_tv);
+        size.setText(this.sizePackage);
+        //setting text weight
+        TextView weight = findViewById(R.id.packageWeight_tv);
+        weight.setText(this.weightPackage);
+        //setting text status
+        TextView status = findViewById(R.id.packageStatus_tv);
+        status.setText(this.statusPackages);
+        //setting delivery date
+        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss:SSS'Z'" , Locale.FRENCH);
+        try {
+            Date newDate = spf.parse(this.deliveryDate);
+            spf = new SimpleDateFormat("MM-dd" , Locale.FRENCH);
+
+            String date = spf.format(newDate);
+            Log.d("DATUMIS" , date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("error" , String.valueOf(e));
+        }
+        TextView date = findViewById(R.id.packageDate_tv);
+        date.setText(this.deliveryDate);
+    }
 
 
     @Override
@@ -73,14 +112,10 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Button is working", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Locker is Unlocked!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-
-        //collabsible toolbar
-        collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
-        collapsingToolbarLayout.setTitle(this.namePackages);
 
         // change FloatingActionButton to a normal button in the toolbar
         AppBarLayout appBarLayout = findViewById(R.id.app_bar);

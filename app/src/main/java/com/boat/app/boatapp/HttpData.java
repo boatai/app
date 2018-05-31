@@ -145,7 +145,7 @@ public class HttpData extends AsyncTask<String, String, String> {
     protected void  onPostExecute(String s) {
         super.onPostExecute(s);
 
-        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock , packagesSize , packagesSize , deliveryData);
+        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock , packagesSize , packagesWeight , deliveryData);
 
 //        Toast.makeText(this.context, "Loading is Done",
 //                Toast.LENGTH_LONG).show();
