@@ -17,4 +17,5 @@
     <string name="delivered">Package already delivered</string>
     <string name="scan_qr">Scan QR code</string>
     <string name="plus">+</string>
+    <string name="route">See Route</string>
 </resources>

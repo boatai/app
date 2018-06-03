@@ -1,6 +1,7 @@
 package com.boat.app.boatapp;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;

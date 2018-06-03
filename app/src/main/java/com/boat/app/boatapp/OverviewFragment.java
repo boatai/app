@@ -1,15 +1,21 @@
 package com.boat.app.boatapp;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String GETLINK = "http://vps1.nickforall.nl:6123/users/5afa9d69b3e20cd5ef85433e/packages";
+    private static final String GETLINK = "http://vps1.nickforall.nl:6123/users/5b143789b3e20cd5ef854340/packages";
 
     public customAdapter CustomAdapter;
     ListView packageList;
@@ -38,6 +44,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     List<String> packagesSize = new ArrayList<String>();
     List<String> packagesWeight = new ArrayList<String>();
     List<String> deliveryData = new ArrayList<String>();
+    List<String> packagesID = new ArrayList<String>();
 
 
 
@@ -78,6 +85,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 .show();
                     }else{
                         Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                        intent.putExtra("id", packagesID.get(position));
                         intent.putExtra("packageName", packages.get(position));
                         intent.putExtra("packageStatus", statusPackages.get(position));
                         intent.putExtra("lockStatus", lockStatus[position]);
@@ -91,9 +99,60 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
         HttpData httpData = new HttpData(getActivity(), this);
         httpData.execute(GETLINK);
+
+        new CountDownTimer(3000 , 1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                notificatonRoute();
+            }
+        }.start();
+    }
+    public void notificatonRoute(){
+        //TODO als de notificatie wordt gestuurd moeten we het id weten
+
+        //setup intent
+        Intent routeIntent = new Intent(getContext().getApplicationContext(), DetailActivity.class);
+        routeIntent.putExtra("id", packagesID.get(0));
+        routeIntent.putExtra("packageName", packages.get(0));
+        routeIntent.putExtra("packageStatus", statusPackages.get(0));
+        routeIntent.putExtra("lockStatus", lockStatus[0]);
+        routeIntent.putExtra("packageSize" , packagesSize.get(0));
+        routeIntent.putExtra("packageWeight" , packagesWeight.get(0));
+        routeIntent.putExtra("deliveryData" , deliveryData.get(0));
+
+        //put all in an stack builder
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity().getApplicationContext());
+        stackBuilder.addNextIntentWithParentStack(routeIntent);
+
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        //this notification is for testing purpuse now
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext() , "Notification")
+                .setSmallIcon(R.drawable.ic_marker_boat)
+                .setContentTitle("Boat is near you")
+                .setContentText("The boat is gonna dock at Wijnhaven 101 with " + packages.get(0)  + " onboard!")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("The boat is gonna dock at Wijnhaven 101 with " + packages.get(0)  + " onboard!"))
+                .setPriority(Notification.PRIORITY_MAX)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentIntent(resultPendingIntent)
+                .addAction(R.drawable.ic_lock, getString(R.string.route),
+                        resultPendingIntent);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity().getApplicationContext());
+        //push notificatoin
+        notificationManager.notify(0 , mBuilder.build());
     }
 
-    public void updateList(List<String> name , List<String> status , Boolean lockstatus[] , List<String> size, List<String> weight , List<String> date){
+
+    public void updateList(List<String> name , List<String> status , Boolean lockstatus[] , List<String> size, List<String> weight , List<String> date , List<String>id){
         //Logging data we get
         Log.d("DATA" , "NAME"+ String.valueOf(name));
 
@@ -110,6 +169,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         this.packagesSize.addAll(size);
         this.packagesWeight.addAll(weight);
         this.deliveryData.addAll(date);
+        this.packagesID.addAll(id);
 
         swipeRefreshLayout.setRefreshing(false);
     }

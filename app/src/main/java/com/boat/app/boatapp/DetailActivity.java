@@ -10,6 +10,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.nio.channels.Channel;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +41,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private CoordinatorLayout coordinatorLayout;
+    private String packageID;
     private String namePackages;
     private String statusPackages;
     private String sizePackage;
@@ -92,6 +96,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         Intent intent = getIntent();
 
         //get data from selected packages
+        this.packageID = intent.getStringExtra("id");
         this.namePackages = intent.getStringExtra("packageName");
         this.statusPackages = intent.getStringExtra("packageStatus");
         this.statusLock = intent.getExtras().getBoolean("lockStatus");
@@ -99,7 +104,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         this.weightPackage = intent.getStringExtra("packageWeight");
         this.deliveryDate = intent.getStringExtra("deliveryData");
 
-        Log.d("INTENTDATA" , this.namePackages + this.statusPackages + this.statusLock + sizePackage + this.weightPackage + this.deliveryDate);
+        Log.d("INTENTDATA" , this.namePackages + this.statusPackages + this.statusLock + sizePackage + this.weightPackage + this.deliveryDate + this.packageID);
 
         //get layout
         coordinatorLayout = findViewById(R.id.cl_layout);
@@ -112,8 +117,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Locker is Unlocked!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                new UnlockLock(view).execute(packageID);
             }
         });
 

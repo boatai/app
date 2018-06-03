@@ -27,11 +27,13 @@ import java.util.List;
 
 public class HttpData extends AsyncTask<String, String, String> {
 
+    List<String> packagesID = new ArrayList<String>();
     List<String> name_array = new ArrayList<String>();
     List<String> status_array = new ArrayList<String>();
     List<String> packagesSize = new ArrayList<String>();
     List<String> packagesWeight = new ArrayList<String>();
     List<String> deliveryData = new ArrayList<String>();
+
 
     Boolean lock[];
 
@@ -44,6 +46,7 @@ public class HttpData extends AsyncTask<String, String, String> {
     String size;
     String weight;
     String date;
+    String id;
 
     public HttpData(Context context , OverviewFragment overviewFragment){
         this.context = context;
@@ -115,7 +118,7 @@ public class HttpData extends AsyncTask<String, String, String> {
             for (int i = 0 ; i < p.length(); i++) {
 
                 JSONObject jsonObject = p.getJSONObject(i);
-
+                id = jsonObject.getString("_id");
                 name = jsonObject.getString("name");
                 status = jsonObject.getString("status");
                 lock[i] = Boolean.valueOf(jsonObject.getString("unlocked"));
@@ -123,13 +126,14 @@ public class HttpData extends AsyncTask<String, String, String> {
                 weight = jsonObject.getString("weight");
                 date = jsonObject.getString("deliveryDate");
 
+                packagesID.add(id);
                 status_array.add(status);
                 name_array.add(name);
                 packagesSize.add(size);
                 packagesWeight.add(weight);
                 deliveryData.add(date);
 
-                Log.d("JSON ARRAY", String.valueOf(status_array));
+                Log.d("JSON ARRAY", String.valueOf(packagesID));
             }
 
             return name;
@@ -145,7 +149,7 @@ public class HttpData extends AsyncTask<String, String, String> {
     protected void  onPostExecute(String s) {
         super.onPostExecute(s);
 
-        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock , packagesSize , packagesWeight , deliveryData);
+        this.overviewActivityWeakReference.get().updateList(name_array , status_array , lock , packagesSize , packagesWeight , deliveryData , packagesID);
 
 //        Toast.makeText(this.context, "Loading is Done",
 //                Toast.LENGTH_LONG).show();
