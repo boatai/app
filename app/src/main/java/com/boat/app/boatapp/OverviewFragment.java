@@ -208,7 +208,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
         @Override
         public int getCount() {
-            return this.packagesName.size();
+            return 1;
         }
 
         @Override
