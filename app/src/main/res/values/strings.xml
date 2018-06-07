@@ -19,4 +19,5 @@
     <string name="plus">+</string>
     <string name="route">See Route</string>
     <string name="locker_text">Your locker with your package in it is open now. You can open your locker on the boat!</string>
+    <string name="noItems">Scan new product</string>
 </resources>
