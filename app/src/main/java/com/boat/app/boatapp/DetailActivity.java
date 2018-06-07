@@ -1,5 +1,7 @@
 package com.boat.app.boatapp;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -13,6 +15,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -49,9 +52,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private String deliveryDate;
     private Boolean statusLock;
     private Toolbar toolbar;
-
     private FloatingActionButton fab;
-
 
     @Override
     protected void onStart() {
@@ -116,7 +117,17 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder);
+//                builder.setTitle("My title");
+//                builder.setMessage("This is my message.");
+//
+//                // add a button
+//                builder.setPositiveButton("OK", null);
+//
+//                // create and show the alert dialog
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
                 new UnlockLock(view).execute(packageID);
             }
         });
