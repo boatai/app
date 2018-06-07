@@ -123,7 +123,6 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         routeIntent.putExtra("id", packagesID.get(0));
         routeIntent.putExtra("packageName", packages.get(0));
         routeIntent.putExtra("packageStatus", statusPackages.get(0));
-        routeIntent.putExtra("lockStatus", lockStatus[0]);
         routeIntent.putExtra("packageSize" , packagesSize.get(0));
         routeIntent.putExtra("packageWeight" , packagesWeight.get(0));
         routeIntent.putExtra("deliveryData" , deliveryData.get(0));
