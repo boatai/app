@@ -63,10 +63,6 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onStart() {
         super.onStart();
 
-        //setting starting values
-        this.packages.add(getResources().getString(R.string.loading));
-        this.statusPackages.add(getResources().getString(R.string.loading));
-
         //get the id of the refresh layout
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -123,7 +119,6 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         routeIntent.putExtra("id", packagesID.get(0));
         routeIntent.putExtra("packageName", packages.get(0));
         routeIntent.putExtra("packageStatus", statusPackages.get(0));
-        routeIntent.putExtra("lockStatus", lockStatus[0]);
         routeIntent.putExtra("packageSize" , packagesSize.get(0));
         routeIntent.putExtra("packageWeight" , packagesWeight.get(0));
         routeIntent.putExtra("deliveryData" , deliveryData.get(0));

@@ -127,7 +127,7 @@ public class UnlockLock extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Snackbar.make(this.view, "Locker is Unlocked!", Snackbar.LENGTH_LONG)
+        Snackbar.make(this.view, R.string.locker_text, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 }
