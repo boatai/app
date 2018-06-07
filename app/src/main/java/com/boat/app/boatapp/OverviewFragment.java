@@ -27,9 +27,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.boat.app.boatapp.camera.CameraOverlay;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +50,7 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     List<String> packagesWeight = new ArrayList<String>();
     List<String> deliveryData = new ArrayList<String>();
     List<String> packagesID = new ArrayList<String>();
+    static NoItemsOverlay noItemsOverlay;
 
 
 
@@ -62,10 +66,6 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onStart() {
         super.onStart();
-
-        //setting starting values
-        this.packages.add(getResources().getString(R.string.loading));
-        this.statusPackages.add(getResources().getString(R.string.loading));
 
         //get the id of the refresh layout
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefresh);
@@ -175,6 +175,12 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeRefreshLayout.setRefreshing(false);
 
+        Log.d("ROBINTEST", String.valueOf(name));
+        if(name.isEmpty()) {
+            noItemsOverlay = new NoItemsOverlay(getActivity().getApplicationContext());
+            getActivity().addContentView(noItemsOverlay, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        }
+
         //this is for the test when data is updated user gets update
 
     }
@@ -243,6 +249,8 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             package_name.setText(this.packagesName.get(position));
             status.setText(this.packagesStatus.get(position));
+
+
             try {
                 if (this.lockStatus != null) {
                     if (this.lockStatus[position]) {

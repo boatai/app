@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    public FloatingActionButton fab;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         appBarLayout = findViewById(R.id.app_bar_layout);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
 
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(offsetHeight <= toolbar.getHeight() && positionOffsetPixels != 0){
                     appBarLayout.setTranslationY((float) -offsetHeight);
                     mViewPager.setTranslationY((float) -offsetHeight);
+
+                    OverviewFragment.noItemsOverlay.setAlpha((float) 1.0 - (float) offsetWidth);
                 }
             }
 
