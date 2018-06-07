@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overview_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.boat.app.boatapp.OverviewFragment">
@@ -13,11 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.boat.app.boatapp.MainActivity">
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.boat.app.boatapp;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.icu.text.LocaleDisplayNames;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -99,8 +101,8 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
         HttpData httpData = new HttpData(getActivity(), this);
         httpData.execute(GETLINK);
-
-        new CountDownTimer(3000 , 1000){
+        //counter to push notification
+        new CountDownTimer(30000 , 1000){
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -172,6 +174,9 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
         this.packagesID.addAll(id);
 
         swipeRefreshLayout.setRefreshing(false);
+
+        //this is for the test when data is updated user gets update
+
     }
 
     @Override
@@ -207,18 +212,16 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
             this.notifyDataSetChanged();
         }
         @Override
-        public int getCount() {
-            return 1;
-        }
+        public int getCount() {return this.packagesName.size();}
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return this.packagesName.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return this.packagesName.size();
+            return position;
         }
 
         @SuppressLint("ViewHolder")
@@ -240,22 +243,25 @@ public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             package_name.setText(this.packagesName.get(position));
             status.setText(this.packagesStatus.get(position));
+            try {
+                if (this.lockStatus != null) {
+                    if (this.lockStatus[position]) {
+                        int textGray = Color.argb(50, 0, 0, 0);
+                        int bgGray = Color.argb(50, 0, 0, 0);
 
-            if(this.lockStatus != null) {
-                if(this.lockStatus[position]){
-                    int textGray = Color.argb(50,0,0, 0);
-                    int bgGray = Color.argb(50,0,0, 0);
+                        convertView.setBackgroundColor(bgGray);
+                        package_name.setTextColor(textGray);
+                        status.setTextColor(textGray);
 
-                    convertView.setBackgroundColor(bgGray);
-                    package_name.setTextColor(textGray);
-                    status.setTextColor(textGray);
+                        ColorMatrix matrix = new ColorMatrix();
+                        matrix.setSaturation(0);
 
-                    ColorMatrix matrix = new ColorMatrix();
-                    matrix.setSaturation(0);
-
-                    ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
-                    status_icon.setColorFilter(filter);
+                        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+                        status_icon.setColorFilter(filter);
+                    }
                 }
+            }catch(Exception e){
+                Log.d("ERRORBOOLEANS" , String.valueOf(e));
             }
 
             return convertView;

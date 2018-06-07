@@ -55,7 +55,7 @@ public class SendPostRequest extends AsyncTask<String, Void, String> {
 
             JSONObject postDataParams = new JSONObject();
             //userId of the user
-            postDataParams.put("userId", "5afa9d69b3e20cd5ef85433e");
+            postDataParams.put("userId", "5b143789b3e20cd5ef854340");
 
             Log.e("params",postDataParams.toString());
             //stream output
