@@ -1,6 +1,5 @@
 package com.boat.app.boatapp;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -53,6 +52,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     private Boolean statusLock;
     private Toolbar toolbar;
     private FloatingActionButton fab;
+
 
     @Override
     protected void onStart() {
@@ -118,17 +118,27 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder);
-//                builder.setTitle("My title");
-//                builder.setMessage("This is my message.");
-//
-//                // add a button
-//                builder.setPositiveButton("OK", null);
-//
-//                // create and show the alert dialog
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-                new UnlockLock(view).execute(packageID);
+                //when fab button is pressed then alert box is shown
+                AlertDialog alertDialog = new AlertDialog.Builder(DetailActivity.this).create();
+                        alertDialog.setTitle(R.string.title_alertLocker);
+                        alertDialog.setMessage("If you confirm this notification your locker on the boat will be unlocked and you can pick up your package.");
+                        alertDialog.setIcon(R.drawable.ic_lock_open);
+                        //when the user clicks "NO" Nothing wil happen
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "NO",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                //if user clicks "OK" the locker goes open
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
+                                new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                new UnlockLock(view).execute(packageID);
+                            }
+                        });
+                        alertDialog.show();
             }
         });
 
