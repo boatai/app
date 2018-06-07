@@ -75,7 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     appBarLayout.setTranslationY((float) -offsetHeight);
                     mViewPager.setTranslationY((float) -offsetHeight);
 
-                    OverviewFragment.noItemsOverlay.setAlpha((float) 1.0 - (float) offsetWidth);
+                    if(OverviewFragment.noItemsOverlay != null) {
+                        OverviewFragment.noItemsOverlay.setAlpha((float) 1.0 - (float) offsetWidth);
+                    }
                 }
             }
 
