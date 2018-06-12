@@ -26,11 +26,16 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final LatLng LOCATION_BOAT = new LatLng(52.365029, 4.893831);
     private static final LatLng AMSTERDAM = new LatLng(52.36848, 4.894690);
+    public JSONArray routePoints;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +44,27 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        new GetMapPoints(getActivity() , this).execute("http://vps1.nickforall.nl:6123/route");
+
         return rootView;
+    }
+    public void getRoutePoints (JSONArray routePoints)  {
+        this.routePoints = routePoints;
+        for(int i = 0; i <=this.routePoints.length(); i++){
+            try {
+                JSONArray singlePoint = (JSONArray) this.routePoints.get(i);
+                String name = singlePoint.getString(0);
+                double lat = (double) singlePoint.get(2);
+                double lon = (double) singlePoint.get(3);
+
+                Log.d("ROUTEPOINTS" , "Dit is de naam: " + name + " Dit is de lat: " +  lat +" Dit is de lon "+ lon);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("ERRORJSON" , String.valueOf(e));
+            }
+
+        }
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {

@@ -40,6 +40,7 @@ import java.util.List;
 
 public class OverviewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String GETLINK = "http://vps1.nickforall.nl:6123/users/5b143789b3e20cd5ef854340/packages";
+    private static final String LINKMAPS = "http://vps1.nickforall.nl:6123/route";
 
     public customAdapter CustomAdapter;
     ListView packageList;
