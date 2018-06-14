@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,9 +34,8 @@ import org.json.JSONObject;
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private static final LatLng LOCATION_BOAT = new LatLng(52.365029, 4.893831);
-    private static final LatLng AMSTERDAM = new LatLng(52.36848, 4.894690);
     public JSONArray routePoints;
+    private PolylineOptions line = new PolylineOptions();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,14 +50,33 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
     public void getRoutePoints (JSONArray routePoints)  {
         this.routePoints = routePoints;
-        for(int i = 0; i <=this.routePoints.length(); i++){
+
+        for(int i = 0; i < this.routePoints.length(); i++){
             try {
                 JSONArray singlePoint = (JSONArray) this.routePoints.get(i);
                 String name = singlePoint.getString(0);
                 double lat = (double) singlePoint.get(2);
                 double lon = (double) singlePoint.get(3);
 
-                Log.d("ROUTEPOINTS" , "Dit is de naam: " + name + " Dit is de lat: " +  lat +" Dit is de lon "+ lon);
+                if(i == 0) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lon)));
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lat, lon))
+                            .title("Bas Boot")
+                            .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_marker_boat)));
+                }else{
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lat, lon))
+                            .title(name)
+                            .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_marker_pickup)));
+                }
+
+
+                line.add(new LatLng(lat, lon))
+                                .width(5).color(R.color.colorPrimary);
+                if(i + 1 == this.routePoints.length()){
+                    mMap.addPolyline(line);
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -101,13 +120,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
 
         mMap = googleMap;
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(AMSTERDAM));
         mMap.setMinZoomPreference(14);
         mMap.setMaxZoomPreference(14);
-
-        mMap.addMarker(new MarkerOptions()
-                .position(LOCATION_BOAT)
-                .title("Bas Boot")
-                .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_marker_boat)));
     }
 }
